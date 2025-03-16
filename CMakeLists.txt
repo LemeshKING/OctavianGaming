@@ -17,6 +17,10 @@ add_executable(${PROJECT_NAME}
 	src/Render/Render.cpp
 	src/SlotMachine/SlotMachine.h
 	src/SlotMachine/SlotMachine.cpp
+	src/SlotMachine/Reel.h
+	src/SlotMachine/Reel.cpp
+	src/SlotMachine/Symbol.h
+	src/SlotMachine/Symbol.cpp
 	src/StateMachine/State.h
 	src/StateMachine/StateMachine.h
 	src/StateMachine/StateMachine.cpp
