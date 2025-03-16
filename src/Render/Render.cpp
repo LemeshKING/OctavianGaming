@@ -10,9 +10,15 @@ void Render::drawButton(std::unique_ptr<Button>& button)
    window.draw(button->getSprite());
 }
 
-void Render::drawReels()
+void Render::drawReels(SlotMachine& slotMachine)
 {
-   //отрисовка слот-машины
+   window.draw(slotMachine.getSprite());
+   for(auto& reel : slotMachine.getReels())
+   {
+      window.draw(reel.getSprite());
+      for(auto &symbol : reel.getSymbols())
+         window.draw(symbol.getSprite());
+   }
 }
 
 sf::RenderWindow& Render::getWindow()

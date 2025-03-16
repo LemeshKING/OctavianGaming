@@ -10,7 +10,7 @@ class Render
  public:
    Render();
    void drawButton(std::unique_ptr<Button> &button);
-   void drawReels(/*SlotMachine &slotMachine*/);
+   void drawReels(SlotMachine &slotMachine);
    sf::RenderWindow& getWindow();
 
 };
