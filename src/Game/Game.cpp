@@ -19,6 +19,7 @@ void Game::run()
             window.close();
       }
       window.clear(sf::Color::White);
+      render.drawReels(slotMachine);
       render.drawButton(starButton);
       render.drawButton(stopButton);
 
