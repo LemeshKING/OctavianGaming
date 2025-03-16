@@ -5,9 +5,9 @@ Render::Render() : window(sf::VideoMode(sf::VideoMode::getDesktopMode()),"SlotMa
    
 }
 
-void Render::drawButton()
+void Render::drawButton(std::unique_ptr<Button>& button)
 {
-   //отрисовка кнопок
+   window.draw(button->getSprite());
 }
 
 void Render::drawReels()

@@ -9,7 +9,7 @@ class Render
    sf::RenderWindow window;
  public:
    Render();
-   void drawButton(/*std::unique_ptr<Button> &button */);
+   void drawButton(std::unique_ptr<Button> &button);
    void drawReels(/*SlotMachine &slotMachine*/);
    sf::RenderWindow& getWindow();
 
