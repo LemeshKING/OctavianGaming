@@ -11,4 +11,5 @@ class Button
  public:
    virtual void onButtonClick() = 0;
    sf::Vector2f getPossition();
+   sf::RectangleShape getSprite();
 };
