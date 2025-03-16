@@ -31,7 +31,11 @@ add_executable(${PROJECT_NAME}
 	src/StateMachine/ResultState.h
 	src/StateMachine/ResultState.cpp
 	src/Button/Button.h
-	src/Button/Button.cpp)
+	src/Button/Button.cpp
+	src/Button/StartButton.h
+	src/Button/StartButton.cpp
+	src/Button/StopButton.h
+	src/Button/StopButton.cpp)
 
 set(SFML_DIR "external/SFML-2.6.0/lib/cmake/SFML")
 set(SFML_STATIC_LIBRARIES TRUE)
