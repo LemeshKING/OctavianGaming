@@ -2,7 +2,7 @@
 
 void IdleState::enter()
 {
-   //логика входа в состояние
+   std::cout<<"waiting button click" << std::endl;
 }
 
 void IdleState::update()

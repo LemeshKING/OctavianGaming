@@ -1,11 +1,14 @@
 #include "State.h"
 #include<memory>
 
+typedef std::shared_ptr<State> SPtrState;
+
 class StateMachine
 {
  private:
-   std::shared_ptr<State> currentState;
+    SPtrState currentState;
  public:
-   void changeState();
+   void changeState(SPtrState &state);
    void update();
+   SPtrState getState();
 };
