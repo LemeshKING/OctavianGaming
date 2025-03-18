@@ -17,7 +17,10 @@ void Render::drawReels(SlotMachine& slotMachine)
    {
       window.draw(reel.getSprite());
       for(auto &symbol : reel.getSymbols())
+      {
          window.draw(symbol.getSprite());
+         window.draw(symbol.getTmpSprite());
+      }
    }
 }
 
