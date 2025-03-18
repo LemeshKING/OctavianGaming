@@ -3,5 +3,6 @@
 
 class InputHandler
 {
-   bool isButtonPresset(/*std::unique_ptr<Button> &button, const sf::Vector2i &mousePos */);
+ public:
+   bool isButtonPresset(std::unique_ptr<Button> &button, const sf::Vector2i &mousePos );
 };

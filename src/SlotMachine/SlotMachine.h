@@ -12,7 +12,7 @@ class SlotMachine
  public:
    SlotMachine();
    void spinReels();
-   void stopReels();
+   bool stopReels();
    void getResult();
    ReelVector getReels();
    sf::RectangleShape getSprite();

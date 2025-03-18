@@ -1,5 +1,10 @@
 #include "ResultState.h"
 
+ResultState::ResultState(SlotMachine& slotMachine)
+{
+   _slotMachine = &slotMachine;
+}
+
 void ResultState::enter()
 {
    //логика входа в состояние
@@ -7,7 +12,8 @@ void ResultState::enter()
 
 void ResultState::update()
 {
-   //логика обновления состояния
+   if(_slotMachine->stopReels())
+      _slotMachine->getResult();
 }
 
 void ResultState::exit()

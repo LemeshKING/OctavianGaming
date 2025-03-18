@@ -19,11 +19,17 @@ Reel::Reel(int i)
 void Reel::spinReel()
 {
    //логика вращения слота
+   for(auto &symbol : symbols)
+      symbol.moveSymbol(reelSprite.getPosition().y + reelSprite.getSize().y);
 }
 
-void Reel::stopReel()
+bool Reel::stopReel()
 {
    //логика остановки слота
+   bool tmp = false;
+   for (auto& symbol : symbols)
+     tmp = symbol.stopSymbol(reelSprite.getPosition().y + reelSprite.getSize().y);
+   return tmp;
 }
 
 sf::RectangleShape Reel::getSprite()
