@@ -15,11 +15,17 @@ SlotMachine::SlotMachine()
 void SlotMachine::spinReels()
 {
    //логика врещения слотов
+   for(auto &reel : reels)
+      reel.spinReel();
 }
 
-void SlotMachine::stopReels()
+bool SlotMachine::stopReels()
 {
    //логика остановки слотов
+   bool tmp = false;
+   for (auto& reel : reels)
+     tmp = reel.stopReel();
+   return tmp;
 }
 
 void SlotMachine::getResult()

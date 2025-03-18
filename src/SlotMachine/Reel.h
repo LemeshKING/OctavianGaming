@@ -13,7 +13,7 @@ class Reel
    Reel();
    Reel(int i);
    void spinReel();
-   void stopReel();
+   bool stopReel();
    sf::RectangleShape getSprite();
    SymbolVector getSymbols();
 };
