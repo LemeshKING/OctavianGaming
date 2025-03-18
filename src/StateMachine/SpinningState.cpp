@@ -1,16 +1,21 @@
 #include "SpinningState.h"
 
+SpinningState::SpinningState(SlotMachine& slotMachine)
+{
+   _slotMachine = &slotMachine;
+}
+
 void SpinningState::enter()
 {
-   //логика входа в состояние
+   std::cout << "Start spinning" << std::endl;
 }
 
 void SpinningState::update()
 {
-   //логика обновления состояния
+   _slotMachine->spinReels();
 }
 
 void SpinningState::exit()
 {
-   //логика выхода из состояния
+   _slotMachine->stopReels();
 }

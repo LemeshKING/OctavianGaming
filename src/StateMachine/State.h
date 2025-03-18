@@ -1,4 +1,6 @@
 #pragma once
+#include"../SlotMachine/SlotMachine.h"
+#include <iostream>
 
 class State
 {

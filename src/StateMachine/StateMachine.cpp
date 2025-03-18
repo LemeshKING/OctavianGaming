@@ -1,11 +1,18 @@
 #include "StateMachine.h"
 
-void StateMachine::changeState()
+void StateMachine::changeState(SPtrState& state)
 {
-   //переключение состояний
+   if(currentState != nullptr) currentState->exit();
+   currentState = state;
+   if(currentState != nullptr) currentState->enter();
 }
 
 void StateMachine::update()
 {
    currentState->update();
+}
+
+SPtrState StateMachine::getState()
+{
+   return currentState;
 }
