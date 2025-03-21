@@ -12,13 +12,9 @@ class Button
    virtual void onButtonClick() = 0;
    sf::Vector2f getPossition();
    sf::RectangleShape getSprite();
-<<<<<<< Updated upstream
+
    sf::Vector2f getSize();
-=======
-<<<<<<< Updated upstream
-=======
-   sf::Vector2f getSize();
+
    sf::Text getText();
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+
 };
