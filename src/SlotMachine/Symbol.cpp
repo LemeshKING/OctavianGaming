@@ -1,37 +1,44 @@
 #include "Symbol.h"
 
 std::vector<int> numPosToStop;
-bool fuckoff = false;
 int k = 0;
 
 bool Symbol::moveTo(const float& pos, const float& lowerLimit)
 {
-   if(fuckoff)
+   if (sprite.getPosition().y != pos)
    {
-      symbolSprite.setPosition(symbolSprite.getPosition().x, pos);
-      symbolSprite.setSize(sf::Vector2f(symbolSprite.getSize().x, sf::VideoMode::getDesktopMode().height / 5));
-      tmpSprite.setSize(sf::Vector2f(tmpSprite.getSize().x,0));
+      if(abs(sprite.getPosition().y - pos) < dy)
+      {
+         sprite.setPosition(sprite.getPosition().x, pos);
+         return true;
+      }
+      sprite.move(0, dy);
    }
-   if (symbolSprite.getPosition().y != pos)
+   
+   
+
+
+   if (sprite.getPosition().y + sprite.getGlobalBounds().height > lowerLimit)
    {
-      symbolSprite.move(0, dy);
-      fuckoff = true;
+      sprite.setTextureRect(sf::IntRect(0, 0, sprite.getGlobalBounds().width, sprite.getGlobalBounds().height - dy));
+      nextSprite.setPosition(sprite.getPosition().x, sf::VideoMode::getDesktopMode().height / 5);
+      nextSprite.setTextureRect(sf::IntRect(0, sprite.getGlobalBounds().height, 213, sf::VideoMode::getDesktopMode().height / 5 - sprite.getGlobalBounds().height));
+   }
+   if(sprite.getPosition().y >= lowerLimit)
+   {
+      sprite = nextSprite;
+      sprite.setTextureRect(sf::IntRect(0, 0, sf::VideoMode::getDesktopMode().width / 9, sf::VideoMode::getDesktopMode().height / 5));
+      std::random_device rd; 
+      std::mt19937 gen(rd()); 
+      std::uniform_int_distribution<int> dist(0, 4);
+      numberTexture = numberNextTexture;
+      numberNextTexture = dist(gen);
+      nextSprite.setTextureRect(sf::IntRect(0, 0, _texture[numberNextTexture]->getSize().x, 0));
+      nextSprite.setTexture(*_texture[numberNextTexture]);
+      nextSprite.setPosition(sprite.getPosition());
    }
 
-   if (symbolSprite.getPosition().y + symbolSprite.getSize().y > lowerLimit)
-   {
-      symbolSprite.setSize(sf::Vector2f(symbolSprite.getSize().x, symbolSprite.getSize().y - dy));
-      tmpSprite.setPosition(symbolSprite.getPosition().x, sf::VideoMode::getDesktopMode().height / 5);
-      tmpSprite.setSize(sf::Vector2f(symbolSprite.getSize().x, tmpSprite.getSize().y + dy));
-   }
-   if(symbolSprite.getPosition().y >= lowerLimit)
-   {
-      symbolSprite.setPosition(symbolSprite.getPosition().x, sf::VideoMode::getDesktopMode().height / 5);
-      symbolSprite.setSize(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 9, sf::VideoMode::getDesktopMode().height / 5));
-      tmpSprite.setSize(sf::Vector2f(symbolSprite.getSize().x, 0));
-   }
-
-   return symbolSprite.getPosition().y == pos;
+   return sprite.getPosition().y == pos;
 }
 
 Symbol::Symbol()
@@ -48,33 +55,44 @@ Symbol::Symbol(int i, int j)
    startPos[0] = sf::VideoMode::getDesktopMode().height / 90 + sf::VideoMode::getDesktopMode().height  / 5;
    startPos[1] = sf::VideoMode::getDesktopMode().height / 90 + sf::VideoMode::getDesktopMode().height * 2 / 5 + sf::VideoMode::getDesktopMode().height / 45;
    startPos[2] = sf::VideoMode::getDesktopMode().height / 90 + sf::VideoMode::getDesktopMode().height * 3 / 5 + 2 * sf::VideoMode::getDesktopMode().height / 45;
-   symbolSprite.setSize(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 9, sf::VideoMode::getDesktopMode().height / 5 ));
-   symbolSprite.setFillColor(sf::Color(0,0,0,255));
-   tmpSprite = symbolSprite;
-   tmpSprite.setSize(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 9, 0));
+
+
 }
 
 void Symbol::moveSymbol(const float& lowerLimit)
 {
-   dy +=0.0005;
+   if(k > 3)
+   {
+      numPosToStop.resize(3, -1);
+      k = 0;
+   }
+   dy +=0.005;
    if(dy > 5)
       dy = 5;
    if(dy < 0.5)
       dy = 0.5;
-   if(symbolSprite.getPosition().y + symbolSprite.getSize().y < lowerLimit)
-      symbolSprite.move(0, dy);
-   else if(symbolSprite.getPosition().y < lowerLimit)
+   if(sprite.getPosition().y + sprite.getGlobalBounds().height < lowerLimit)
+      sprite.move(0, dy);
+   else if(sprite.getPosition().y < lowerLimit)
    {
-      symbolSprite.setSize(sf::Vector2f(symbolSprite.getSize().x, symbolSprite.getSize().y - dy));
-      symbolSprite.move(0, dy);
-      tmpSprite.setPosition(symbolSprite.getPosition().x, sf::VideoMode::getDesktopMode().height / 5);
-      tmpSprite.setSize(sf::Vector2f(symbolSprite.getSize().x, tmpSprite.getSize().y + dy));
+
+      sprite.setTextureRect(sf::IntRect(0,0,sprite.getGlobalBounds().width, sprite.getGlobalBounds().height - dy));
+      sprite.move(0, dy);
+      nextSprite.setPosition(sprite.getPosition().x, sf::VideoMode::getDesktopMode().height / 5);
+      nextSprite.setTextureRect(sf::IntRect(0, sprite.getGlobalBounds().height, 213, sf::VideoMode::getDesktopMode().height / 5 - sprite.getGlobalBounds().height));
    }
    else 
    {
-      symbolSprite.setPosition(symbolSprite.getPosition().x, sf::VideoMode::getDesktopMode().height / 5);
-      symbolSprite.setSize(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 9, sf::VideoMode::getDesktopMode().height / 5));
-      tmpSprite.setSize(sf::Vector2f(symbolSprite.getSize().x, 0));
+      sprite = nextSprite;
+      sprite.setTextureRect(sf::IntRect(0,0, sf::VideoMode::getDesktopMode().width / 9, sf::VideoMode::getDesktopMode().height / 5));
+      std::random_device rd; 
+      std::mt19937 gen(rd()); 
+      std::uniform_int_distribution<int> dist(0, 4);
+      numberTexture = numberNextTexture;
+      numberNextTexture = dist(gen);
+      nextSprite.setTextureRect(sf::IntRect(0, 0, _texture[numberNextTexture]->getSize().x, 0));
+      nextSprite.setTexture(*_texture[numberNextTexture]);
+      nextSprite.setPosition(sprite.getPosition());
    }
       
 }
@@ -85,7 +103,7 @@ bool Symbol::stopSymbol(const float& lowerLimit)
    bool tmp = false;
    if(dy > 0.5)
    {
-      dy -= 0.001;
+      dy -= 0.01;
       moveSymbol(lowerLimit);
       
    }
@@ -93,16 +111,17 @@ bool Symbol::stopSymbol(const float& lowerLimit)
    {
       k++;
       dy = 0.5;
-      float ySymbolPosition = symbolSprite.getPosition().y;
+      float ySymbolPosition = sprite.getPosition().y;
       if(numPosToStop[numberSymbol] == -1)
       {
-         if (startPos[1] - ySymbolPosition > 0 && abs(startPos[1] - ySymbolPosition) < abs(startPos[0] - ySymbolPosition))
+         if (startPos[1] - ySymbolPosition > 0 )
             numPosToStop[numberSymbol] = 1;
-         else if (startPos[2] - ySymbolPosition > 0 && abs(startPos[2] - ySymbolPosition) < abs(startPos[0] - ySymbolPosition))
+         else if (startPos[2] - ySymbolPosition > 0 )
             numPosToStop[numberSymbol] = 2;
          else
             numPosToStop[numberSymbol] = 0;
       }
+
       if(k == 3)
       {
          for (int i = 1; i < numPosToStop.size(); i++)
@@ -111,21 +130,61 @@ bool Symbol::stopSymbol(const float& lowerLimit)
          for (int i = 0; i < numPosToStop.size(); i++)
             if (numPosToStop[i] == 3)
                numPosToStop[i] = 0;
+
       }
 
-      tmp = moveTo(startPos[numberSymbol], lowerLimit);
+      tmp = moveTo(startPos[numPosToStop[numberSymbol]], lowerLimit);
    }
 
    return tmp;
    
 }
 
-sf::RectangleShape Symbol::getSprite()
+void Symbol::standOnBestPos()
 {
-    return symbolSprite;
+   if(nextSprite.getGlobalBounds().height > 0)
+   {
+      sprite = nextSprite;
+      numberTexture = numberNextTexture;
+   }
+
+   sprite.setPosition(sprite.getPosition().x,startPos[numPosToStop[numberSymbol]]);
+   sprite.setTextureRect(sf::IntRect(0,0, sf::VideoMode::getDesktopMode().width / 9,sf::VideoMode::getDesktopMode().height / 5));
+   nextSprite.setTextureRect(sf::IntRect(0,0, nextSprite.getGlobalBounds().width, 0));
 }
 
-sf::RectangleShape Symbol::getTmpSprite()
+sf::Sprite Symbol::getSprite()
 {
-   return tmpSprite;
+    return sprite;
+}
+
+sf::Sprite Symbol::getNextSprite()
+{
+   return nextSprite;
+}
+
+void Symbol::setTexture(std::vector<std::shared_ptr<sf::Texture>>& texture)
+{
+   std::random_device rd;  
+   std::mt19937 gen(rd()); 
+   std::uniform_int_distribution<int> dist(0, 4); 
+   numberTexture = dist(gen);
+   numberNextTexture = dist(gen);
+   _texture = texture;
+   sprite.setTextureRect(sf::IntRect(0, 0, _texture[numberTexture]->getSize().x, _texture[numberTexture]->getSize().y));
+   sprite.setTexture(*_texture[numberTexture]);
+   sprite.setPosition(symbolSprite.getPosition());
+   nextSprite.setTextureRect(sf::IntRect(0, 0, _texture[numberNextTexture]->getSize().x, 0));
+   nextSprite.setTexture(*_texture[numberNextTexture]);
+   nextSprite.setPosition(symbolSprite.getPosition());
+}
+
+int Symbol::getNumberTexture()
+{
+   return numberTexture;
+}
+
+std::vector<int> Symbol::getPosToStop()
+{
+   return numPosToStop;
 }

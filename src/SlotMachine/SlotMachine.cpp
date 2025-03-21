@@ -1,6 +1,6 @@
 #include "SlotMachine.h"
 
-SlotMachine::SlotMachine()
+SlotMachine::SlotMachine(TextureManager& textureManager)
 {
    slotMachineSprite.setPosition(sf::VideoMode::getDesktopMode().width / 5, sf::VideoMode::getDesktopMode().height / 6);
    slotMachineSprite.setSize(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2.1, sf::VideoMode::getDesktopMode().height / 1.36));
@@ -9,7 +9,7 @@ SlotMachine::SlotMachine()
    slotMachineSprite.setOutlineColor(sf::Color::Black);
    reels.resize(3);
    for(int i = 0; i < reels.size(); i++)
-      reels[i] = Reel(i);
+      reels[i] = Reel(textureManager, i);
 }
 
 void SlotMachine::spinReels()
@@ -28,9 +28,15 @@ bool SlotMachine::stopReels()
    return tmp;
 }
 
-void SlotMachine::getResult()
+int SlotMachine::getResult()
 {
-   //логика получения результата
+   if(reels[0].getResult() == reels[1].getResult() && reels[0].getResult() == reels[2].getResult())
+      return 2;
+   else if(reels[0].getResult() == reels[1].getResult() || reels[0].getResult() == reels[2].getResult() || reels[1].getResult() == reels[2].getResult())
+      return 1;
+   else 
+      return 0;
+      
 }
 
 ReelVector SlotMachine::getReels()

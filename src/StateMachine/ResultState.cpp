@@ -13,10 +13,28 @@ void ResultState::enter()
 void ResultState::update()
 {
    if(_slotMachine->stopReels())
-      _slotMachine->getResult();
+   {
+      _count = _slotMachine->getResult();
+      Notify();
+   }
 }
 
 void ResultState::exit()
 {
    //логика выхода из состояния
+}
+
+void ResultState::Attach(SPtrObserver& observer)
+{
+   _observer = observer;
+}
+
+void ResultState::Detach(SPtrObserver& observer)
+{
+   _observer.reset();
+}
+
+void ResultState::Notify()
+{
+   _observer->resultOver(_count);
 }

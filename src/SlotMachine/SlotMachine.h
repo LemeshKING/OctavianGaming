@@ -10,10 +10,10 @@ class SlotMachine
    ReelVector reels;
    sf::RectangleShape slotMachineSprite;
  public:
-   SlotMachine();
+   SlotMachine(TextureManager &textureManager);
    void spinReels();
    bool stopReels();
-   void getResult();
+   int getResult();
    ReelVector getReels();
    sf::RectangleShape getSprite();
 };

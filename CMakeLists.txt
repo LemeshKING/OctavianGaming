@@ -30,12 +30,16 @@ add_executable(${PROJECT_NAME}
 	src/StateMachine/SpinningState.cpp
 	src/StateMachine/ResultState.h
 	src/StateMachine/ResultState.cpp
+	src/StateMachine/ISubject.h
+	src/StateMachine/IObserver.h
 	src/Button/Button.h
 	src/Button/Button.cpp
 	src/Button/StartButton.h
 	src/Button/StartButton.cpp
 	src/Button/StopButton.h
-	src/Button/StopButton.cpp)
+	src/Button/StopButton.cpp
+	src/TextureManager/TextureManager.h
+	src/TextureManager/TextureManager.cpp)
 
 set(SFML_DIR "external/SFML-2.6.0/lib/cmake/SFML")
 set(SFML_STATIC_LIBRARIES TRUE)
@@ -46,5 +50,7 @@ if(SFML_FOUND)
 endif()
 
 set_target_properties (${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/)
+file(COPY ${CMAKE_SOURCE_DIR}/resources DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/resources DESTINATION ${CMAKE_BINARY_DIR}/bin/Debug/)
 
 
